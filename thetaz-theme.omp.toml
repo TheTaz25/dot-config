@@ -1,0 +1,168 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 2
+final_space = true
+console_title_template = '{{ .Folder }}{{if .Root}} :: Root{{end}} {{if gt .Code 0}}:: ({{.Code}}){{end}}'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    foreground = 'p:text-primary'
+    background = 'transparent'
+    template = '┏ {{ .Folder }} '
+
+    [blocks.segments.properties]
+      style = 'folder'
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground = 'p:text-secondary'
+    foreground_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}p:text-orange{{ end }}', '{{ if gt .Behind 0 }}p:text-red{{ end }}', '{{ if gt .Ahead 0 }}p:text-blue{{end}}']
+    background = 'transparent'
+    template = ' {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }} {{if or (.Working.Changed) (.Staging.Changed)}}**{{end}} {{if gt .Behind 0}}PULL {{end}}{{if and (gt .Ahead 0) (eq .Behind 0)}}PUSH {{end}}'
+
+    [blocks.segments.properties]
+      branch_max_length = 25
+      fetch_status = true
+      fetch_upstream_icon = true
+
+[[blocks]]
+  type = 'rprompt'
+
+  [[blocks.segments]]
+    type = "battery"
+    style = "plain"
+    foreground = "#193549"
+    background = "transparent"
+    background_templates = [
+      "{{if eq \"Charging\" .State.String}}#40c4ff{{end}}",
+      "{{if eq \"Discharging\" .State.String}}#ff5722{{end}}",
+      "{{if eq \"Full\" .State.String}}#4caf50{{end}}"
+    ]
+    template = " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }} "
+
+    [properties]
+      discharging_icon = " "
+      charging_icon = " "
+      charged_icon = " "
+
+  [[blocks.segments]]
+    type = "text"
+    style = "plain"
+    foreground = "p:text-green"
+    template = "  "
+
+  [[blocks.segments]]
+    type = 'node'
+    style = 'plain'
+    foreground = 'p:text-green'
+    background = 'transparent'
+    template = ' (Node)'
+
+    [blocks.segments.properties]
+      display_mode = 'files'
+      fetch_package_manager = false
+      home_enabled = false
+
+  [[blocks.segments]]
+    type = 'go'
+    style = 'plain'
+    foreground = 'p:text-green'
+    background = 'transparent'
+    template = ' (GO)'
+
+    [blocks.segments.properties]
+      fetch_version = false
+
+  [[blocks.segments]]
+    type = 'python'
+    style = 'plain'
+    foreground = 'p:text-green'
+    background = 'transparent'
+    template = ' (Python)'
+
+    [blocks.segments.properties]
+      display_mode = 'files'
+      fetch_version = false
+      fetch_virtual_env = true
+
+  [[blocks.segments]]
+    type = "lua"
+    style = "plain"
+    foreground = "p:text-green"
+    background = "transparent"
+    template = " (Lua)"
+    
+    [blocks.segments.properties]
+      display_mode = "files"
+      fetch_version = false
+
+  [[blocks.segments]]
+    type = "rust"
+    style = "plain"
+    foreground = "p:text-green"
+    background = "transparent"
+    template = " (Rust)"
+
+    [blocks.segments.properties]
+      display_mode = "files"
+      fetch_version = false
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground = 'p:text-green'
+    background = 'transparent'
+    template = ' '
+
+  [[blocks.segments]]
+    type = 'time'
+    style = 'plain'
+    foreground = 'p:text-blue'
+    background = 'transparent'
+    template = ' <b>{{ .CurrentDate | date "15:04:05" }}</b></>'
+
+  [[blocks.segments]]
+    type = "executiontime"
+    style = "plain"
+    foreground = "white"
+    background = "transparent"
+    template = " executed in {{ .FormattedMs }} "
+
+    [blocks.segments.properties]
+      style = "lucky7"
+      always_enabled = true
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+  
+  [[blocks.segments]]
+    foreground = "white"
+    style = "plain"
+    template = "┗"
+    type = "text"
+
+[transient_prompt]
+  foreground = '#bbb'
+  background = 'transparent'
+  template = ' '
+
+[secondary_prompt]
+  foreground = 'white'
+  background = 'transparent'
+  template = '┣━'
+
+[palette]
+  text-primary = '#eee'
+  text-secondary = '#bbb'
+  text-blue = '#4B95E9'
+  text-green = '#59C9A5'
+  text-orange = '#F07623'
+  text-red = '#D81E5B'
